@@ -17,11 +17,11 @@
  * specific language governing permissions and limitations
  * under the License.
  *
-*/
+ */
 
 (function () {
     // special patch to correctly work on Ripple emulator (CB-9760)
-    if (window.parent && !!window.parent.ripple) { // https://gist.github.com/triceam/4658021
+    if (window.self !== window.top || window.parent && !!window.parent.ripple) { // https://gist.github.com/triceam/4658021
         module.exports = window.open.bind(window); // fallback to default window.open behaviour
         return;
     }
@@ -31,7 +31,7 @@
     var modulemapper = require('cordova/modulemapper');
     var urlutil = require('cordova/urlutil');
 
-    function InAppBrowser () {
+    function InAppBrowser() {
         this.channels = {
             'beforeload': channel.create('beforeload'),
             'loadstart': channel.create('loadstart'),
